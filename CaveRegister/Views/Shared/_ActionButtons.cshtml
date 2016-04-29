@@ -1,0 +1,8 @@
+﻿@model System.Int32
+@using CaveRegister.Models
+@if (User.IsInRoles(Role.Contributor,Role.Admin)){
+	@Html.ActionLink(" ", "Edit", new { id = Model}, new {@class = "edit" })
+}
+@if (User.IsInRole(Role.Admin)) {
+	@Html.ActionLink(" ", "Delete", new { id = Model}, new {@class="delete" })
+}

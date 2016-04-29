@@ -1,0 +1,7 @@
+﻿
+@*Script Reference for tinyMCE is moved to Layout.cshtml to support multiple instances of tinyMCE*@
+
+@Html.TextArea(string.Empty, /* Name suffix */
+	(string)ViewData.TemplateInfo.FormattedModelValue, /* Initial value */
+	new { @class="tinymce_basic" }
+)

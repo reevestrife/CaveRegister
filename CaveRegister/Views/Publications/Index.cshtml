@@ -1,0 +1,57 @@
+﻿@using CaveRegister.MVCTableModels;
+@model CaveRegister.Models.PublicationsViewModel
+
+@{
+    ViewBag.Title = "Publications";
+	var table = Html.MvcTable(() => new PublicationTable());
+}
+
+<h2>Publications</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@table.Table()
+@table.Pagination()
+
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PublicationEntity.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PublicationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileLocation)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PublicationEntity.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PublicationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileLocation)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PublicationID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PublicationID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PublicationID })
+        </td>
+    </tr>
+}
+
+</table>*@

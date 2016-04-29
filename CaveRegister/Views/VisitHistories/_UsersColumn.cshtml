@@ -1,0 +1,6 @@
+﻿@model ICollection<CaveRegister.Models.ApplicationUser>
+
+@foreach (var item in Model)
+{
+	<a class="btn btn-default btn-xs">@item.NameAndSurname</a>
+}

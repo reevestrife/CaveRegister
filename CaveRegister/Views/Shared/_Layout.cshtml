@@ -1,0 +1,70 @@
+﻿@using CaveRegister.Model;
+@using CaveRegister.Helpers;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - SEC Cave Register</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+	<link href="~/Content/chosen.min.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("SEC Cave Register", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+					@if (Request.IsAuthenticated && User.IsInRoles(Role.Contributor,Role.Admin,Role.Observer)) {
+						<li>@Html.ActionLink("Caves", "Index", "Caves")</li>
+						<li>@Html.ActionLink("Publications", "Index", "PublicationEntities")</li>
+					}
+
+                    @if (Request.IsAuthenticated && User.IsInRole(Role.Admin)) {
+                        @*<li>@Html.ActionLink("Roles Admin", "Index", "RolesAdmin")</li> no need for roles admin, not allowed to add roles. *@
+                        <li>@Html.ActionLink("Users Admin", "Index", "UsersAdmin")</li>
+						<li>@Html.ActionLink("Obersvable Entities", "Index", "ObservableEntities")</li>
+					}
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - SEC Cave Register</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+	@Scripts.Render("~/bundles/tinymce")
+	@Html.MvcTableScript()
+    @RenderSection("scripts", required: false)
+	@*@RenderSection("TinyMCE", required: false)*@
+	<script src="~/Scripts/chosen.jquery.min.js"></script>
+
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script src="~/Scripts/EFSpatialGoogleMaps.js"></script>
+
+
+	<script type="text/javascript">
+	$(".chosen").chosen();
+	$(".chosen-deselect").chosen({ allow_single_deselect: true });
+	$(".chosen").chosen().change();
+	$(".chosen").trigger('liszt:updated');
+	</script>
+</body>
+</html>

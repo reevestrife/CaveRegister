@@ -1,0 +1,6 @@
+﻿@model ICollection<CaveRegister.Models.CaveStatus>
+
+@foreach (var item in Model)
+{
+	<a class="btn btn-default btn-xs">@item.Description</a>
+}

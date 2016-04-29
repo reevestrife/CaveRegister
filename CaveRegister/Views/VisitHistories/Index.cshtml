@@ -1,0 +1,66 @@
+﻿@model CaveRegister.Models.VisitHistoriesViewModel
+@using CaveRegister.MVCTableModels;
+@{
+	ViewBag.Title = "Visit History";
+	Layout = null;
+	var table = Html.MvcTable(() => new VisitHistoryTable());
+}
+
+<h2 id="VisitHistorySection">Visit History</h2>
+
+<p>
+	@Html.ActionLink("Create New", "Create", new { id = Model.CaveID })
+</p>
+
+<form class="mvc-table-filter">
+	<fieldset>
+		@Html.EditorFor(p=> p.CaveID)
+	</fieldset>
+	<div>
+		<input type="submit" value="Search" class="btn btn-primary" />
+	</div>
+</form>
+
+		@*@table.TextBoxFilter("CaveID", new { text = Model.CaveID })*@
+		@table.Table()
+		@table.Pagination()
+
+
+
+
+
+
+
+
+
+
+
+		@*<table class="table">
+				<tr>
+					<th>
+						@Html.DisplayNameFor(model => model.VisitHistories.FirstOrDefault().VistitDate)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.VisitHistories.FirstOrDefault().TripDurationInHours)
+					</th>
+					<th></th>
+				</tr>
+
+			@foreach (var item in Model.VisitHistories)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.VistitDate)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.TripDurationInHours)
+					</td>
+					<td>
+						@Html.ActionLink("Edit", "Edit", new { id=item.VisitHistoryID }) |
+						@Html.ActionLink("Details", "Details", new { id=item.VisitHistoryID }) |
+						@Html.ActionLink("Delete", "Delete", new { id=item.VisitHistoryID })
+					</td>
+				</tr>
+			}
+
+			</table>*@
