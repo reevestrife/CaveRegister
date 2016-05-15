@@ -44,7 +44,6 @@ namespace CaveRegister.Models
 		public virtual DbSet<EntityStatus> EntityStatuses { get; set; }
 		public virtual DbSet<Entrance> Entrances { get; set; }
 
-		public virtual DbSet<ExcelCave> ExcelCave { get; set; }
 		public virtual DbSet<ExplorationStatus> ExplorationStatuses { get; set; }
 		public virtual DbSet<File> Files { get; set; }
 		public virtual DbSet<FileType> FileTypes { get; set; }
@@ -56,7 +55,7 @@ namespace CaveRegister.Models
 		public virtual DbSet<ObservableEntity> ObservableEntities { get; set; }
 		public virtual DbSet<ObservableEntityType> ObservableEntityTypes { get; set; }
 		public virtual DbSet<Observation> Observations { get; set; }
-		public virtual DbSet<PotentialType> Potentials { get; set; }
+		public virtual DbSet<PotentialType> PotentialTypes { get; set; }
 		public virtual DbSet<Province> Provinces { get; set; }
 		public virtual DbSet<Publication> Publications { get; set; }
 		public virtual DbSet<PublicationEntity> PublicationEntities { get; set; }
@@ -211,6 +210,44 @@ namespace CaveRegister.Models
             return new ApplicationDbContext();
         }
 
+
+		private void OnModelCreatingPotential(DbModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Cave_Potential>()
+				.HasOptional(e => e.LasEditApplicationUser)
+				.WithMany(e => e.LastEditCave_Potentials)
+				.HasForeignKey(e => e.LasEditApplicationUserId)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<Cave>()
+				.HasMany(e => e.Cave_Potential)
+				.WithRequired(e => e.Cave)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<Cave_Potential>()
+				.Property(e => e.PotentialTypeId)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<Cave_Potential>()
+				.Property(e => e.Description)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<PotentialType>()
+				.Property(e => e.PotentialTypeId)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<PotentialType>()
+				.Property(e => e.Description)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<PotentialType>()
+				.HasMany(e => e.Cave_Potential)
+				.WithRequired(e => e.PotentialType)
+				.WillCascadeOnDelete(false);
+		}
+
+
+
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
@@ -238,11 +275,7 @@ namespace CaveRegister.Models
 				.HasForeignKey(e => e.LasEditApplicationUserId)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Cave_Potential>()
-				.HasOptional(e => e.LasEditApplicationUser)
-				.WithMany(e => e.LastEditCave_Potentials)
-				.HasForeignKey(e => e.LasEditApplicationUserId)
-				.WillCascadeOnDelete(false);
+			
 
 			modelBuilder.Entity<Entrance>()
 				.HasOptional(e => e.LasEditApplicationUser)
@@ -289,7 +322,7 @@ namespace CaveRegister.Models
 			modelBuilder.Entity<Article>()
 				.HasMany(e => e.MetaFiles)
 				.WithMany(e => e.Articles)
-				.Map(m => m.ToTable("Article_MetaFile").MapLeftKey("ArticleId").MapRightKey("FileId"));
+				.Map(m => m.ToTable("Article_MetaFile").MapLeftKey("ArticleId").MapRightKey("MetaFileId"));
 
 			modelBuilder.Entity<Article>()
 				.HasMany(e => e.ArticleAttributes)
@@ -352,6 +385,7 @@ namespace CaveRegister.Models
 
 			modelBuilder.Entity<Cave>()
 				.Property(e => e.Description)
+				.IsOptional()
 				.IsUnicode(false);
 
 			modelBuilder.Entity<Cave>()
@@ -394,10 +428,6 @@ namespace CaveRegister.Models
 				.Property(e => e.LocationStatusId)
 				.IsUnicode(false);
 
-			modelBuilder.Entity<Cave>()
-				.HasMany(e => e.Cave_Potential)
-				.WithRequired(e => e.Cave)
-				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Cave>()
 				.HasMany(e => e.Entrances)
@@ -450,15 +480,9 @@ namespace CaveRegister.Models
 			modelBuilder.Entity<Cave_Fossil>()
 				.HasMany(e => e.MetaFiles)
 				.WithMany(e => e.Cave_Fossils)
-				.Map(m => m.ToTable("Cave_Fossil_MetaFile").MapLeftKey("Cave_FossilId").MapRightKey("FileId"));
+				.Map(m => m.ToTable("Cave_Fossil_MetaFile").MapLeftKey("Cave_FossilId").MapRightKey("MetaFileId"));
 
-			modelBuilder.Entity<Cave_Potential>()
-				.Property(e => e.PotentialId)
-				.IsUnicode(false);
 
-			modelBuilder.Entity<Cave_Potential>()
-				.Property(e => e.Description)
-				.IsUnicode(false);
 
 			modelBuilder.Entity<CaveAttribute>()
 				.Property(e => e.CaveAttributeId)
@@ -697,20 +721,9 @@ namespace CaveRegister.Models
 			modelBuilder.Entity<Observation>()
 				.HasMany(e => e.MetaFiles)
 				.WithMany(e => e.Observations)
-				.Map(m => m.ToTable("Observation_MetaFile").MapLeftKey("ObservationId").MapRightKey("FileId"));
+				.Map(m => m.ToTable("Observation_MetaFile").MapLeftKey("ObservationId").MapRightKey("MetaFileId"));
 
-			modelBuilder.Entity<PotentialType>()
-				.Property(e => e.PotentialTypeId)
-				.IsUnicode(false);
 
-			modelBuilder.Entity<PotentialType>()
-				.Property(e => e.Description)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<PotentialType>()
-				.HasMany(e => e.Cave_Potential)
-				.WithRequired(e => e.PotentialType)
-				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Province>()
 				.Property(e => e.ProvinceId)
@@ -823,6 +836,9 @@ namespace CaveRegister.Models
 			modelBuilder.Entity<History>()
 				.Property(e => e.SerialisedChanges)
 				.IsUnicode(false);
+
+
+			OnModelCreatingPotential(modelBuilder);
 		}
 
 

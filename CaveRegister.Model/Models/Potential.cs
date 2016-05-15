@@ -5,7 +5,7 @@ namespace CaveRegister.Model
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("Potential")]
+    [Table("PotentialType")]
     public partial class PotentialType
     {
 		public const string Airflow= "Airflow";

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaveRegister", "CaveRegiste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaveRegister.Model", "CaveRegister.Model\CaveRegister.Model.csproj", "{B0A37B54-855C-4786-AF66-459170C5DADD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelToCaveConverter", "ExcelToCaveConverter\ExcelToCaveConverter.csproj", "{0E5EAE1E-B9CA-4C8D-B327-7F2290B79FF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelToCaveConvertertApp", "ExcelToCaveConverterApp\ExcelToCaveConvertertApp.csproj", "{0E5EAE1E-B9CA-4C8D-B327-7F2290B79FF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -12,17 +12,14 @@ namespace CaveRegister.Model
         public int Cave_PotentialId { get; set; }
 
         public int CaveId { get; set; }
-
-        [Required]
-        [StringLength(64)]
-        public string PotentialId { get; set; }
-
-        [Required]
-        public string Description { get; set; }
-
 		[JsonIgnore]
-        public virtual Cave Cave { get; set; }
+		public virtual Cave Cave { get; set; }
+		
+		[Required]
+		[StringLength(64)]
+		public string PotentialTypeId { get; set; }
+		public virtual PotentialType PotentialType { get; set; }
 
-        public virtual PotentialType PotentialType { get; set; }
-    }
+		public string Description { get; set; }
+	}
 }

@@ -50,7 +50,7 @@ namespace CaveRegister.EF
 		}
 		private IQueryable<PotentialType> GetAllPotentials()
 		{
-			return db.Potentials;
+			return db.PotentialTypes;
 		}
 		private IQueryable<Province> GetAllProvinces()
 		{
